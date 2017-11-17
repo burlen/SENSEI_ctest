@@ -1,0 +1,23 @@
+set(SENSEI_BACKEND $ENV{SENSEI_BACKEND})
+set(CTEST_SITE "sensei-fedora.dhcp.lbl.gov")
+set(CTEST_BUILD_NAME "sensei-${SENSEI_BACKEND}")
+set(CTEST_DASHBOARD_ROOT "$ENV{DASHROOT}")
+set(INITIAL_CACHE
+"CMAKE_CXX_FLAGS=-fPIC -std=c++11 -Wall -Wextra -fpermissive
+CMAKE_C_FLAGS=-fPIC -Wall -Wextra
+BUILD_TESTING=ON
+ENABLE_SENSEI=ON
+ENABLE_VTK_XMLP=ON
+ENABLE_PYTHON=ON
+ENABLE_ADIOS=ON
+VTK_DIR=/home/sensei/sc17/software/vtk/8.0.0/lib/cmake/vtk-8.0/
+ADIOS_DIR=/home/sensei/sc17/software/adios/1.13.0/")
+set(CTEST_BUILD_CONFIGURATION Debug)
+set(CTEST_GIT_COMMAND "/usr/bin/git")
+set(CTEST_TEST_ARGS PARALLEL_LEVEL 1)
+set(CTEST_BUILD_FLAGS -j4)
+set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+set(DASHBOARD_RELIABLE TRUE)
+#set(ALWAYS_UPDATE ON)
+#set(INCREMENTAL_BUILD ON)
+include("${CTEST_DASHBOARD_ROOT}/sensei-dashboard.cmake")
