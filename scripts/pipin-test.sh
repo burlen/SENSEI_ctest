@@ -8,33 +8,40 @@ then
     exit -1
 fi
 
-export DASHBOARD_TYPE=$1
+case "$1" in
+    Nightly)
+      ;;
+    Continuous)
+      ;;
+    *)
+      echo "ERROR: bad config \$1=$1 is invalid."
+      exit -1
+esac
 
-export DASHROOT=/Users/bloring/dashboards/sensei
-cd $DASHROOT
-
-#case "$1" in
-#    Nightly)
-#      cd Nightly/src
-#      SVNREV=`date -v-2d +%Y-%m-%d`
-#      echo $SVNREV
-#      svn up -r {"$SVNREV 22:00:00"}
-#      cd ../..
-#      ;;
-#    Continuous)
-#      CTESTFLAGS="-L serial"
-#      ;;
-#esac
+source /Users/bloring/apps/modulefiles/mpich/3.2.1
+source /Users/bloring/apps/modulefiles/chaos/stable-11.12
+source /Users/bloring/apps/modulefiles/adios/1.13.0
 
 case "$2" in
     vtk)
-      source pipin-sensei-vtk-env.sh
-      DASHCONFIG=pipin-sensei-vtk.cmake
+      source /Users/bloring/apps/modulefiles/vtk/8.0.1
       ;;
     *)
       echo "ERROR: bad config \$2=$2 is invalid."
       exit -1
 esac
+
+export DASHBOARD_TYPE=$1
+export SENSEI_BACKEND=$2
+
+export DASHROOT=/Users/bloring/dashboards/sensei
+export DASHCONFIG=pipin-sensei-${SENSEI_BACKEND}.cmake
+
+export LD_LIBRARY_PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/lib:$LD_LIBRARY_PATH
+export PYTHONPATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/lib:$PYTHONPATH
+export PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/bin:$PATH
+
+cd $DASHROOT
 
 EPOCH=`date +%s`
 LOCKFILE=lock_$DASHBOARD_TYPE
