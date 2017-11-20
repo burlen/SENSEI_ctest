@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 trap 'echo "# $BASH_COMMAND"' DEBUG
 if [[ $# != 2 ]]
 then
