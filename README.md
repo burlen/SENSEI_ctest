@@ -1,5 +1,5 @@
 # SENSEI_ctest
-A collection of scripts that drive SENSEI CTest regression tests.
+A collection of scripts that drive SENSEI CTest regression tests. Results are submitted to http://cdash.hpcvis.com/index.php?project=SENSEI
 
 ## Usage
 The followinig guide assumes bash shell.
