@@ -1,10 +1,10 @@
 #!/bin/bash -l
 trap 'echo "# $BASH_COMMAND"' DEBUG
-if [[ $# != 2 ]]
+if [[ $# != 3 ]]
 then
     echo
     echo "ERROR: Usage"
-    echo "$0 Experimental|Nightly|Continuous vtk|libsim|catalyst"
+    echo "$0 Experimental|Nightly|Continuous vtk|libsim|catalyst branch"
     echo
     exit -1
 fi
@@ -45,13 +45,24 @@ esac
 
 export DASHBOARD_TYPE=$1
 export SENSEI_BACKEND=$2
+export SENSEI_BRANCH=$3
 
 export DASHROOT=/home/sensei/sc17/software/sensei/builds/SENSEI_ctest
 export DASHCONFIG=fedora-sensei-sensei-${SENSEI_BACKEND}.cmake
 
-export LD_LIBRARY_PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/lib:$LD_LIBRARY_PATH
-export PYTHONPATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/lib:$PYTHONPATH
-export PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build/bin:$PATH
+export LD_LIBRARY_PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build-${SENSEI_BRANCH}/lib:$LD_LIBRARY_PATH
+export PYTHONPATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build-${SENSEI_BRANCH}/lib:$PYTHONPATH
+export PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build-${SENSEI_BRANCH}/bin:$PATH
+
+SOURCE_DIR=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-${SENSEI_BRANCH}
+
+
+if [[ ! -e $SOURCE_DIR ]]
+then
+    git clone --branch ${SENSEI_BRANCH}  https://gitlab.kitware.com/sensei/sensei.git ${SOURCE_DIR}
+fi
+
+xhost +
 
 cd $DASHROOT
 

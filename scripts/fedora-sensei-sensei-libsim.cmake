@@ -1,6 +1,7 @@
 set(SENSEI_BACKEND $ENV{SENSEI_BACKEND})
+set(SENSEI_BRANCH $ENV{SENSEI_BRANCH})
 set(CTEST_SITE "sensei-fedora.dhcp.lbl.gov")
-set(CTEST_BUILD_NAME "sensei-${SENSEI_BACKEND}")
+set(CTEST_BUILD_NAME "sensei-${SENSEI_BACKEND}-${SENSEI_BRANCH}")
 set(CTEST_DASHBOARD_ROOT "$ENV{DASHROOT}")
 set(VISIT_INSTALL /home/sensei/sc17/software/visit/2.13.0/linux-x86_64/)
 set(VISIT_DEPS /home/sensei/sc17/software/visit/builds/visit-deps/)
@@ -10,10 +11,13 @@ set(INITIAL_CACHE
 "CMAKE_CXX_FLAGS=-fPIC -std=c++11 -Wall -Wextra -fpermissive
 CMAKE_C_FLAGS=-fPIC -Wall -Wextra
 ENABLE_SENSEI=ON
-ENABLE_VTK_XMLP=ON
+ENABLE_VTK_IO=ON
 ENABLE_PYTHON=ON
 ENABLE_LIBSIM=ON
+ENABLE_ADIOS1=ON
+ENABLE_ADIOS2=ON
 ENABLE_ADIOS=ON
+ENABLE_HDF5=ON
 BUILD_TESTING=ON
 ADIOS_DIR=/home/sensei/sc17/software/adios/1.13.0/
 VTK_DIR=${VISIT_VTK_HOME}/lib/cmake/vtk-6.1/
