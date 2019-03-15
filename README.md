@@ -10,16 +10,12 @@ The followinig guide assumes bash shell.
     mkdir -p dashroot/logs
     ```
     Note that the brace notation all permutations are expressed, so the first line above is telling you to create 6 directories.
-3. Make an initial checkout of the sources, and test data. If you have both *Nightly* and *Continuous* dashboards you need a set of source trees for each. Each backend requires a source tree.
+3. Pull the dashbaord scripts:
     ```bash
-    cd dashroot/{Nightly,Continuous}/sensei-{vtk,libsim,catalyst}
-    git clone git@gitlab.kitware.com:sensei/sensei.git
-    ```
-4. Pull the dashbaord scripts:
-    ```bash
+    cd dashroot
     git init
-    git remote add github git@github.com:burlen/SENSEI_ctest.git
-    git pull github master
+    git remote add origin git@github.com:burlen/SENSEI_ctest.git
+    git pull origin master
     ```
 5. In the scripts directory make a copy of one of the existing pairs of files to *hostname-config.cmake* and *hostname-test.sh*. Modify the copies of these files to fit the paths of your system. Back in the root directory make symlinks to the new copies. You will also need to set up the environment in the shell script. This assumes you have all of the necessary dependencies built and installed correctly. Installing the dependencies and configuring the build correctly is the hardest step of this process, and finer points are not documented here.
 6. Setup a cron job to run the dashboard at a convinient time. For example use *crontab -e* and add one or both of the following.
