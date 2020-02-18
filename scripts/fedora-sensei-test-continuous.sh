@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 bes=( vtk catalyst libsim )
-brs=( sensei_3_development in_transit_data_adaptor master )
+brs=( develop master )
 
 for be in ${bes[*]}
 do

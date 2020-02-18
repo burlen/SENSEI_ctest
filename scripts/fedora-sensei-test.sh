@@ -54,6 +54,9 @@ export LD_LIBRARY_PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/se
 export PYTHONPATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build-${SENSEI_BRANCH}/lib:$PYTHONPATH
 export PATH=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-build-${SENSEI_BRANCH}/bin:$PATH
 
+export DISPLAY=:0.0
+
+
 SOURCE_DIR=${DASHROOT}/${DASHBOARD_TYPE}/sensei-${SENSEI_BACKEND}/sensei-${SENSEI_BRANCH}
 
 
@@ -78,6 +81,6 @@ then
 fi
 touch $LOCKFILE
 trap "rm $LOCKFILE; exit" SIGHUP SIGINT SIGTERM
-ctest --verbose --timeout 30 -S $DASHROOT/$DASHCONFIG -O ./logs/$DASHBOARD_TYPE-$EPOCH.log -V ${CTESTFLAGS}
+ctest --verbose --timeout 120 -S $DASHROOT/$DASHCONFIG -O ./logs/$DASHBOARD_TYPE-$EPOCH.log -V ${CTESTFLAGS}
 find $DASHROOT/logs -maxdepth 0 -name '*.log' -atime 2 -exec rm \{\} \;
 rm $LOCKFILE
